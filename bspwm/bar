@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+
+source "/home/hakki/.cache/wal/colors.sh"
+
+# Check if panel is already running
+
+if [ $(pgrep -cx lemonbar) -gt 0 ] ; then
+		printf "%s\n" "The panel is already running." >&2
+			exit 1
+fi
+
+# Start panel
+
+~/.config/bspwm/barscrpt | lemonbar -F $foreground -B $background -f scientifica -f Siji -p -o -1 -n "lemonbar"|sh

@@ -1,0 +1,292 @@
+[colors]
+background      = #a6f1efee
+background-alt  = #a6f1efee
+foreground      = #a668615e
+foreground-alt  = #a668615e
+black           = #000211
+red             = #BB0454
+red-alt         = #f22c40
+green           = #5ab738
+yellow          = #d5911a
+blue            = #407ee7
+magenta         = #6666ea
+cyan            = #32B792
+white           = #32B792
+fullb           = #32B792
+
+[bar/top]
+monitor = LVDS
+height = 20
+bottom = false
+fixed-center = true
+underline-size = 2
+topbar.border-top-size = 4
+background = ${colors.black}
+foreground = ${colors.foreground}
+padding-left = 0
+padding-right = 1
+module-margin-left = 0
+module-margin-right = 1
+override-redirect = true
+wm-restack = bspwm
+locale = tr_TR.UTF-8
+;radius = 1
+
+font-0 = scientifica:pixelsize=8
+font-1 = FontAwesome:pixelsize=9;0
+font-2 = unifont:fontformat=truetype:size=9:antialias=false;0
+font-3 = Wuncon Siji:pixelsize=9;0
+font-4 = Roboto:style=Regular:pixelsize=9;0
+font-5 = mononoki NF:pixelsize=18;1
+font-6 = Icons:pixelsize=11;1
+font-7 = Iosevka:style=Regular:pixelsize=21;3:
+
+modules-left = bspwm xwindow
+modules-center =
+modules-right = backlight battery system-usb-udev temperature wlan volume date powermenu
+
+;tray-position = right
+tray-padding = 1
+;tray-transparent = true
+tray-background = ${colors.background}
+tray-transparent = true
+
+[module/system-usb-udev]
+type = custom/script
+exec = ~/.config/polybar/scripts/system-usb-udev.sh
+tail = true
+click-left = ~/.config/polybar/scripts/system-usb-udev.sh --mount
+click-right = ~/.config/polybar/scripts/system-usb-udev.sh --unmount
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+full-at = 99
+;
+; ; Use the following command to list batteries and adapters:
+; ; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC1
+format-discharging = <ramp-capacity> <label-discharging>
+format-charging = <animation-charging> <label-charging>
+label-charging = Charging %percentage%%
+label-discharging = Discharging %percentage%%
+label-discharging-foreground = ${colors.cyan}
+ramp-capacity-foreground = ${colors.cyan}
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+animation-charging-foreground = ${colors.cyan}
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+; Framerate in milliseconds
+animation-charging-framerate = 750
+; ; If an inotify event haven't been reported in this many
+; ; seconds, manually poll for new values.
+; ;
+; ; Needed as a fallback for systems that don't report events
+; ; on sysfs/procfs.
+; ;
+; ; Disable polling by setting the interval to 0.
+; ;
+; ; Default: 5
+poll-interval = 5
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:40:...%
+label-foreground = ${colors.white}
+
+[module/backlight]
+type = internal/backlight
+
+; XRandR output to get get values from
+; Default: the monitor defined for the running bar
+card = radeon_bl0
+;
+; ; Create scroll handlers used to set the backlight value
+; ; Default: true
+enable-scroll = true
+format = <label>
+label = %percentage%%
+label-foreground = ${colors.red}
+
+[module/bspwm]
+type = internal/bspwm
+ws-icon-0 = 0;
+ws-icon-1 = 1;
+ws-icon-2 = 2;
+ws-icon-3 = 3;
+ws-icon-4 = 4;
+ws-icon-5 = 5;
+ws-icon-6 = 6;
+ws-icon-7 = 7;
+ws-icon-8 = 8;
+ws-icon-9 = 9;
+format = <label-state> <label-mode>
+label-focused = %icon%
+label-focused-padding = 1
+label-focused-foreground = ${colors.red}
+label-focused-underline = #942EA0
+label-occupied = %icon%
+label-occupied-foreground = #3A6884
+label-occupied-padding = 1
+label-occupied-underline = ${colors.cyan}
+label-urgent =!%icon%
+label-urgent-padding = 1
+label-urgent-foreground= ${colors.red}
+label-empty = %icon%
+label-empty-foreground = #445573
+pin-workspaces = true
+label-empty-padding = 1
+label-monocle = " "
+; Output mode flags after focused state label
+; Default: false
+inline-mode = false
+enable-click = true
+enable-scroll = false
+
+[module/mpd]
+type = internal/mpd
+port = 6600
+format-online = <label-song> <bar-progress> <icon-prev> <toggle> <icon-next>
+format-online-foreground = ${colors.white}
+icon-prev = 
+icon-seekb = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-seekf = 
+icon-next = 
+icon-play-foreground = ${colors.white}
+icon-pause-foreground = ${colors.white}
+icon-next-foreground = ${colors.white}
+icon-prev-foreground = ${colors.white}
+label-song-maxlen = 47
+label-song-ellipsis = true
+label-offline = mpd is offline
+bar-progress-width = 15
+bar-progress-indicator = |
+bar-progress-indicator-foreground = #ffffff
+bar-progress-indicator-font = 2
+bar-progress-fill = ─
+bar-progress-fill-font = 2
+bar-progress-fill-foreground = ${colors.green}
+bar-progress-empty = ─
+bar-progress-empty-font = 2
+bar-progress-empty-foreground = #2D5C1C
+
+[module/wlan]
+type = internal/network
+interface = wlp8s0
+;interface = wlp0s26u1u2
+interval = 20.0
+format-connected = <label-connected>
+format-connected-foreground = ${colors.cyan}
+format-connected-underline = #15547B
+label-connected = %essid%
+format-disconnected-foreground = ${colors.red}
+format-disconnected = no wifi :C
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = ${colors.foreground-alt}
+
+[module/date]
+type = internal/date
+interval = 1
+date = "%H:%M"
+date-alt = "%d/%m %a %H:%M:%S"
+;format-prefix =
+format-foreground = ${colors.fullb}
+;format-underline = #fontformatf
+label = %date%
+
+[module/volume]
+type = internal/alsa
+
+format-volume = <label-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${colors.red}
+
+format-muted-prefix = " "
+format-foreground = ${colors.cyan}
+format-muted-foreground = #ad2828
+label-muted = Muted
+format-muted-underline = ${colors.red}
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-headphones-0 = 
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 90
+hwmon-path = /sys/class/thermal/thermal_zone0/temp
+format = <label>
+;format-underline = #fff
+format-warn =  <label-warn>
+;format-warn-underline = ${self.format-underline}
+label = %temperature%
+label-foreground = ${colors.red}
+format-foreground = ${colors.red}
+label-warn = %temperature% :O
+label-warn-underline = ${colors.red}
+
+[module/powermenu]
+type = custom/menu
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.red}
+label-close =  cancel
+label-close-foreground = ${colors.red}
+label-separator = |
+label-separator-foreground = ${colors.red}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-0-2 = suspend
+menu-0-2-exec = systemctl suspend
+menu-0-2-foreground = ${colors.red}
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = reboot
+
+menu-2-0 = power off
+menu-2-0-exec = poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[module/pad]
+type = custom/text
+content = ""
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+; vim:ft=dosini
