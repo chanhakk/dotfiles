@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+if [[ -n $(pidof i3lock) ]]; then
+	echo "Already running"
+	exit 1
+fi
+tmpbg="/tmp/screen.png"
+maim -u -m 1 "$tmpbg"; corrupter -mag 1 -boffset 2 -add 0 "$tmpbg" "$tmpbg"
+i3lock -i "$tmpbg"; rm "$tmpbg"

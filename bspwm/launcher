@@ -1,1 +1,0 @@
-rofi -modi window,drun -show drun -location 0 -lines 10 -line-padding 4 -hide-scrollbar -show-icons -drun-icon-theme -theme ".cache/wal/colors-rofi-dark.rasi" -font "Iosevka Regular 12"
